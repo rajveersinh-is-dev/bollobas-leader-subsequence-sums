@@ -1,0 +1,95 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb,amsthm}
+
+\title{The Bollob\'as--Leader Conjecture on Few Subsequence Sums in $\mathbb Z_n\times \mathbb Z_n$: A Partial Result}
+\author{Autonomous Mathematical Research Project}
+\date{\today}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{conjecture}{Conjecture}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+We study the Bollob\'as--Leader conjecture on the minimum number of distinct
+nonempty subsequence sums of a zero-free sequence in $(\mathbb Z/n\mathbb Z)^2$.
+We give a complete proof of the case $t=0$: every zero-free sequence of
+length $n-1$ has at least $n-1$ distinct nonempty subsequence sums.  We also
+report exhaustive computational verification of the conjectured bound for
+$n=3$ (all $t$), $n=4$ (all $t$), and $n=5$ ($t=0,1,2$).  The general
+conjecture remains open; the obstruction to a direct induction is identified.
+\end{abstract}
+
+\section{Problem statement}
+
+Let $G_n=(\mathbb Z/n\mathbb Z)^2$.  A sequence $(a_1,\dots,a_\ell)\in G_n^\ell$ is
+\emph{zero-free} if no nonempty subsequence sums to $0\in G_n$.  A
+\emph{subsequence sum} is any sum $a_{i_1}+\cdots+a_{i_r}$ with
+$1\le i_1<\cdots<i_r\le \ell$.
+
+\begin{conjecture}[Bollob\'as--Leader]
+For $0\le t\le n-1$, every zero-free sequence in $G_n$ of length $n-1+t$
+has at least $n(t+1)-1$ distinct nonempty subsequence sums.
+\end{conjecture}
+
+The extremal construction is $n-1$ copies of $(1,0)$ together with $t$
+copies of $(0,1)$, which is zero-free and attains $n(t+1)-1$ distinct
+subsequence sums.
+
+\section{Existing results}
+
+\begin{itemize}
+\item Olsen's theorem: every sequence of length at least $2n-1$ in
+$G_n$ contains a nonempty zero-sum subsequence; hence zero-free
+sequences have length at most $2n-2$.
+\item One-dimensional analogue: in $\mathbb Z_n$, the sequence of $t$
+copies of $1$ minimises the number of distinct nonempty subsequence
+sums among zero-free sequences of length $t$.
+\end{itemize}
+
+\section{Result proved here}
+
+\begin{theorem}
+If $\mathbf a=(a_1,\dots,a_{n-1})$ is a zero-free sequence in $G_n$, then
+$\mathbf a$ has at least $n-1$ distinct nonempty subsequence sums.
+\end{theorem}
+
+\begin{proof}
+Define $S_0=0$ and $S_i=a_1+\cdots+a_i$ for $1\le i\le n-1$.  If
+$S_i=S_j$ with $0\le i<j\le n-1$, then
+$a_{i+1}+\cdots+a_j=0$, a nonempty subsequence summing to $0$,
+contradicting zero-freeness.  Thus $S_0,\dots,S_{n-1}$ are $n$ distinct
+elements.  Removing $S_0=0$, the remaining $n-1$ values are distinct
+nonzero elements of $\Sigma^\circ(\mathbf a)$.  Hence
+$|\Sigma^\circ(\mathbf a)|\ge n-1$.
+\end{proof}
+
+This is the case $t=0$ of the conjecture.
+
+\section{Computational verification}
+
+The file \texttt{src/min\_sums.py} exhaustively checks the conjectured
+minimum for $n=3$ (all $t$), $n=4$ (all $t$), and $n=5$ ($t=0,1,2$);
+see \texttt{experiments/computation\_results.md}.  In every tested
+case the minimum agrees with $n(t+1)-1$.
+
+\section{Obstruction to a full proof}
+
+A natural induction would say: appending one element to a zero-free
+sequence increases the number of distinct subsequence sums by at least $n$.
+Zero-freeness rules out $-x$ being a previous sum, but it does not rule
+out other collisions between the old set and its translate by $x$.  A
+collision $y=x+z$ with $y,z$ previous sums need not yield a zero-sum
+subsequence, because the two underlying subsequences may overlap
+nontrivially and common terms need not cancel in subset-sum notation.
+Controlling these collisions is the remaining obstacle.
+
+\section{Conclusion}
+
+The Bollob\'as--Leader conjecture is proved here only for $t=0$.  The
+general case remains open.  The supplied code verifies the predicted
+minima for small $n$.
+
+\end{document}
