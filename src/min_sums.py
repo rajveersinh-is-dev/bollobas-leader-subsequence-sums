@@ -12,16 +12,38 @@ value over zero-free multisets is the minimum for that (n,L).
 Usage:
     python src/min_sums.py n t       # prints min count for length n-1+t
 """
-import sys
+from __future__ import annotations
+
 from itertools import combinations_with_replacement
+import sys
+
 
 
 def group_elements(n):
+    """Group elements.
+    
+    Args:
+        n:
+    
+    Returns:
+        The computed result
+    
+    """
     return [(a, b) for a in range(n) for b in range(n) if not (a == 0 and b == 0)]
 
 
 def subseq_sums(seq, n):
     # set of residues of nonempty subset sums (positions distinguished)
+    """Subseq sums.
+    
+    Args:
+        seq (list):
+        n:
+    
+    Returns:
+        The computed result
+    
+    """
     sums = set()
     # iterate over all subsets of positions via bitmask
     L = len(seq)
@@ -37,8 +59,18 @@ def subseq_sums(seq, n):
     return sums
 
 
-def zero_free(seq, n):
+def zero_free(seq, n) -> bool:
     # no nonempty subsequence (subset of positions) sums to (0,0)
+    """Zero free.
+    
+    Args:
+        seq (list):
+        n:
+    
+    Returns:
+        bool: Result of type bool
+    
+    """
     L = len(seq)
     for mask in range(1, 1 << L):
         a = 0
@@ -53,7 +85,17 @@ def zero_free(seq, n):
     return True
 
 
-def min_count(n, L):
+def min_count(n, L) -> tuple:
+    """Min count.
+    
+    Args:
+        n:
+        L:
+    
+    Returns:
+        tuple: Result of type tuple
+    
+    """
     elems = group_elements(n)
     best = None
     count = 0
